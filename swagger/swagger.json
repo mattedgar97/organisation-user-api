@@ -1,0 +1,13 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Huler Orgs and Users API"
+  },
+  "servers": [
+    {
+      "url": "https://api.huler.io/v1/"
+    }
+  ],
+  "paths": {}
+}
