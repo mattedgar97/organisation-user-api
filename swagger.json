@@ -6,8 +6,107 @@
   },
   "servers": [
     {
-      "url": "https://api.huler.io/v1/"
+      "url": "https://api.huler.io/v1"
     }
   ],
-  "paths": {}
+  "paths": {
+    "/organisation": {
+      "post": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "operationId": "register-organisation.",
+        "summary": "Create a new organisation.",
+        "requestBody": {
+          "description": "Organisation data request payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "oprah.winfrey@cnn.com"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Oprah Winfrey"
+                  },
+                  "organisationId": {
+                    "type": "string",
+                    "example": "cnn"
+                  },
+                  "organisationName": {
+                    "type": "string",
+                    "example": "CNN"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "+447816098765"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "example": "oprah.winfrey@cnn.com"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Oprah Winfrey"
+                    },
+                    "organisationId": {
+                      "type": "string",
+                      "example": "cnn"
+                    },
+                    "organisationName": {
+                      "type": "string",
+                      "example": "CNN"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "+447816098765"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 Bad Request"
+          },
+          "403": {
+            "description": "403 Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Message": {
+                      "type": "string",
+                      "example": "User is not authorized to access this resource with an explicit deny"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500 Internal Server Error"
+          }
+        }
+      }
+    }
+  }
 }
