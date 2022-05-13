@@ -87,16 +87,6 @@
           "400": {
             "description": "Bad Request"
           },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/forbiddenResponse"
-                }
-              }
-            }
-          },
           "409": {
             "description": "This organisation path already exists"
           },
@@ -164,78 +154,12 @@
                 }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Bad Request"
-        },
-        "403": {
-          "description": "Forbidden",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/forbiddenResponse"
-              }
-            }
-          }
-        },
-        "404": {
-          "description": "Organisation path not found"
-        },
-        "500": {
-          "description": "Internal Server Error"
-        }
-      }
-    },
-    "/organisation/search": {
-      "post": {
-        "tags": [
-          "OrganisationAPI"
-        ],
-        "summary": "Search for an existing organisation with path",
-        "requestBody": {
-          "description": "Organisation search payload",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "path": {
-                    "type": "string",
-                    "example": "cnn"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Organisation Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "path": {
-                      "type": "string",
-                      "example": "cnn"
-                    },
-                    "sso": {
-                      "type": "bool",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
           },
           "400": {
             "description": "Bad Request"
           },
           "403": {
-            "description": "Forbidden",
+            "description": "Forbidden from accessing this organisation",
             "content": {
               "application/json": {
                 "schema": {
@@ -246,6 +170,97 @@
           },
           "404": {
             "description": "Organisation path not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "/organisation/search": {
+        "post": {
+          "tags": [
+            "OrganisationAPI"
+          ],
+          "summary": "Search for an existing organisation with path",
+          "requestBody": {
+            "description": "Organisation search payload",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "example": "cnn"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Organisation Found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "example": "cnn"
+                      },
+                      "sso": {
+                        "type": "bool",
+                        "example": true
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Organisation path not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
+    },
+    "/organisation/{orgPath}/attributes": {
+      "get": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Request organisation attributes",
+        "responses": {
+          "200": {
+            "description": "The attribute was created/replaced",
+            "schema": {
+              "OrganisationAttributes": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden from accessing this orgs attributes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbiddenResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -296,42 +311,7 @@
             "description": "Bad Request"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/forbiddenResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/organisation/{orgPath}/attributes": {
-      "get": {
-        "tags": [
-          "OrganisationAPI"
-        ],
-        "summary": "Request organisation attributes",
-        "responses": {
-          "200": {
-            "description": "The attribute was created/replaced",
-            "schema": {
-              "OrganisationAttributes": {
-                "type": "string",
-                "example": ""
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "403": {
-            "description": "Forbidden",
+            "description": "Forbidden from updating this orgs attributes",
             "content": {
               "application/json": {
                 "schema": {
