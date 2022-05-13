@@ -15,7 +15,6 @@
         "tags": [
           "OrganisationAPI"
         ],
-        "operationId": "register-organisation.",
         "summary": "Create a new organisation.",
         "requestBody": {
           "description": "Organisation data request payload",
@@ -25,25 +24,186 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "oprah.winfrey@cnn.com"
+                  "user": {
+                    "type": "object",
+                    "example": {
+                      "email": "oprah.winfrey@cnn.com",
+                      "name": "Oprah Winfrey",
+                      "phone": "+447816098765"
+                    }
                   },
-                  "name": {
-                    "type": "string",
-                    "example": "Oprah Winfrey"
-                  },
-                  "organisationId": {
+                  "organisation": {
+                    "type": "object",
+                    "example": {
+                      "path": "cnn"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Organisation Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "example": "cnn"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Oprah Winfrey"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "0001-01-01T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "0001-01-01T00:00:00Z"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "licenseLimit": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "arePoliciesEnabled": {
+                      "type": "bool",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbiddenResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This organisation path already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organisation/{orgPath}": {
+      "get": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Request an organisation",
+        "responses": {
+          "200": {
+            "description": "Organisation returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "example": "cnn"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Oprah Winfrey"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "0001-01-01T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "0001-01-01T00:00:00Z"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "licenseLimit": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "arePoliciesEnabled": {
+                      "type": "bool",
+                      "example": true
+                    },
+                    "HulerConfigParameters": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "OrganisationAttributes": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "OrganisationCapabilities": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "403": {
+          "description": "Forbidden",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/forbiddenResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Organisation path not found"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "/organisation/search": {
+      "post": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Search for an existing organisation with path",
+        "requestBody": {
+          "description": "Organisation search payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
                     "type": "string",
                     "example": "cnn"
-                  },
-                  "organisationName": {
-                    "type": "string",
-                    "example": "CNN"
-                  },
-                  "phone": {
-                    "type": "string",
-                    "example": "+447816098765"
                   }
                 }
               }
@@ -52,31 +212,19 @@
         },
         "responses": {
           "200": {
-            "description": "200 OK",
+            "description": "Organisation Found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string",
-                      "example": "oprah.winfrey@cnn.com"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "Oprah Winfrey"
-                    },
-                    "organisationId": {
+                    "path": {
                       "type": "string",
                       "example": "cnn"
                     },
-                    "organisationName": {
-                      "type": "string",
-                      "example": "CNN"
-                    },
-                    "phone": {
-                      "type": "string",
-                      "example": "+447816098765"
+                    "sso": {
+                      "type": "bool",
+                      "example": true
                     }
                   }
                 }
@@ -84,26 +232,250 @@
             }
           },
           "400": {
-            "description": "400 Bad Request"
+            "description": "Bad Request"
           },
           "403": {
-            "description": "403 Forbidden",
+            "description": "Forbidden",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "Message": {
-                      "type": "string",
-                      "example": "User is not authorized to access this resource with an explicit deny"
-                    }
+                  "$ref": "#/components/schemas/forbiddenResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Organisation path not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organisation/{orgPath}/attribute/{attributeName}": {
+      "put": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Create/Replace a specific attribute of an organisation",
+        "requestBody": {
+          "description": "Attribute update request payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customName": {
+                    "type": "string",
+                    "example": "Band"
+                  },
+                  "values": {
+                    "type": "array",
+                    "example": [
+                      "Band 1",
+                      "Band 2",
+                      "Band 3"
+                    ]
                   }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The attribute was created/replaced",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbiddenResponse"
                 }
               }
             }
           },
           "500": {
-            "description": "500 Internal Server Error"
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organisation/{orgPath}/attributes": {
+      "get": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Request organisation attributes",
+        "responses": {
+          "200": {
+            "description": "The attribute was created/replaced",
+            "schema": {
+              "OrganisationAttributes": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbiddenResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/organisation/{orgPath}/config": {
+      "put": {
+        "tags": [
+          "OrganisationAPI"
+        ],
+        "summary": "Create/Update an organisations hulerhub config",
+        "requestBody": {
+          "description": "Config request payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "HulerConfigParameters": {
+                    "type": "object",
+                    "properties": {
+                      "darkModeFaviconURL": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "darkModeLogoURL": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "darkModePrimaryColour": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "defaultDark": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "lightModeFaviconURL": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "lightModeLogoURL": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "lightModePrimaryColour": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "logoType": {
+                        "type": "string",
+                        "example": "TEXT_LOGO"
+                      },
+                      "textLogo": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "textLogoColour": {
+                        "type": "string",
+                        "example": "#ea1616"
+                      },
+                      "todayTileURL": {
+                        "type": "object",
+                        "properties": {
+                          "thumbnailUrl": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "thumbnailUrlCroppedLandscape": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "thumbnailUrlCroppedPortrait": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "thumbnailUrlCroppedSquare": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "isDefaultBranding": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The config was updated/created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbiddenResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "forbiddenResponse": {
+        "type": "object",
+        "properties": {
+          "Message": {
+            "type": "string",
+            "example": "User is not authorized to access this resource with an explicit deny"
+          }
+        }
+      },
+      "conflictResponse": {
+        "type": "object",
+        "properties": {
+          "Message": {
+            "type": "string",
+            "example": "This resource already exists"
           }
         }
       }
